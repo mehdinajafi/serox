@@ -1,5 +1,6 @@
 import * as React from "react"
 import GoogleAuth from "../components/join/GoogleAuth"
+import Login from "../components/join/Login"
 
 const Join = () => {
   return (
@@ -9,7 +10,8 @@ const Join = () => {
           Hi, Join us
         </h1>
         <GoogleAuth />
-        <hr></hr>
+        <hr className="my-4"></hr>
+        <Login />
       </div>
     </div>
   )
