@@ -3,44 +3,64 @@ import { withRouter, RouteComponentProps } from "react-router-dom"
 import { firebase } from "../../firebase/firebase"
 import { ReactComponent as ErrorLogo } from "../../assets/icons/error.svg"
 
-interface LoginProps extends RouteComponentProps<any> {}
+interface SignupProps extends RouteComponentProps<any> {}
 
-const Signup: React.FC<LoginProps> = ({ history }) => {
+const Signup: React.FC<SignupProps> = ({ history }) => {
   const [error, setError] = React.useState<null | string>(null)
 
-  const submitForm = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const [
-      userNameInput,
-      emailInput,
-      passwordInput,
-    ]: HTMLFormControlsCollection = (e.target as HTMLFormElement).elements
-    if (
-      (userNameInput as HTMLInputElement).value &&
-      (emailInput as HTMLInputElement).value &&
-      (passwordInput as HTMLInputElement).value
-    ) {
-      await firebase
-        .auth()
-        .createUserWithEmailAndPassword(
-          (emailInput as HTMLInputElement).value,
-          (passwordInput as HTMLInputElement).value
-        )
-        .then(async (userCredential) => {
-          if (userCredential.user?.displayName) {
-            userCredential.user.displayName = (userNameInput as HTMLInputElement).value
-          }
-        })
-        .then(() => {
-          history.push("/")
-        })
-        .catch((err) => {
-          setError(err.message)
-        })
-    } else {
-      setError("You need to enter your username, email and password.")
-    }
-  }
+  const submitForm = React.useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault()
+
+      const [
+        userNameInput,
+        emailInput,
+        passwordInput,
+      ]: HTMLFormControlsCollection = (e.target as HTMLFormElement).elements
+
+      if (
+        (userNameInput as HTMLInputElement).value.trim() &&
+        (emailInput as HTMLInputElement).value.trim() &&
+        (passwordInput as HTMLInputElement).value.trim()
+      ) {
+        firebase
+          .firestore()
+          .collection("users")
+          .doc((userNameInput as HTMLInputElement).value.trim())
+          .get()
+          .then(async (val) => {
+            // If the username was not taken
+            if (val.data() === undefined) {
+              await firebase
+                .auth()
+                .createUserWithEmailAndPassword(
+                  (emailInput as HTMLInputElement).value.trim(),
+                  (passwordInput as HTMLInputElement).value.trim()
+                )
+                .then((userCredential) => {
+                  if (userCredential.user?.displayName) {
+                    const username = (userNameInput as HTMLInputElement).value.trim()
+                    userCredential.user.displayName = username
+                  }
+                })
+                .catch((error) => {
+                  setError(error.message)
+                })
+              history.push("/")
+            } else {
+              setError("This username is already taken.")
+            }
+          })
+          .catch((error) => {
+            setError(error.message)
+          })
+      } else {
+        setError("You need to enter your username, email and password.")
+      }
+    },
+    [history]
+  )
+
   return (
     <div className="my-4">
       <form onSubmit={submitForm} className="flex flex-col">
@@ -60,14 +80,14 @@ const Signup: React.FC<LoginProps> = ({ history }) => {
           className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline"
         />
         {error && (
-          <div className="flex mb-2 text-red-600">
-            <ErrorLogo className="h-6 w-6" />
-            {error}
+          <div className="flex items-center mb-2 p-2 rounded border border-red-700">
+            <ErrorLogo className="h-12 fill-current" />
+            <div className="ml-2 text-red-700">{error}</div>
           </div>
         )}
         <button
           type="submit"
-          className="p-4 rounded bg-primary-700 hover:bg-primary-800 text-white focus:outline-none focus:shadow-outline"
+          className="p-4 rounded bg-green-600 hover:bg-green-700 text-white focus:outline-none"
         >
           Signup
         </button>
