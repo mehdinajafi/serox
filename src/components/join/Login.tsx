@@ -3,9 +3,11 @@ import { withRouter, RouteComponentProps } from "react-router-dom"
 import { firebase } from "../../firebase/firebase"
 import { ReactComponent as ErrorLogo } from "../../assets/icons/error.svg"
 
-interface LoginProps extends RouteComponentProps<any> {}
+interface LoginProps extends RouteComponentProps<any> {
+  setAuthMethod: React.Dispatch<React.SetStateAction<"login" | "signup">>
+}
 
-const Login: React.FC<LoginProps> = ({ history }) => {
+const Login: React.FC<LoginProps> = ({ history, setAuthMethod }) => {
   const [error, setError] = React.useState<null | string>(null)
 
   const submitForm = React.useCallback(
@@ -57,11 +59,20 @@ const Login: React.FC<LoginProps> = ({ history }) => {
         )}
         <button
           type="submit"
-          className="p-4 rounded bg-primary-700 hover:bg-primary-800 text-white focus:outline-none focus:shadow-outline"
+          className="p-4 rounded font-bold uppercase bg-primary-700 hover:bg-primary-800 text-white focus:outline-none focus:shadow-outline"
         >
-          Login
+          Log in
         </button>
       </form>
+      <div className="my-4 font-bold text-center text-gray-900">
+        New to Serox?{" "}
+        <button
+          className="font-bold text-blue-700 hover:underline focus:outline-none"
+          onClick={() => setAuthMethod("signup")}
+        >
+          Create an account
+        </button>
+      </div>
     </div>
   )
 }
