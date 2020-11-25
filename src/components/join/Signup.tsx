@@ -1,67 +1,69 @@
 import * as React from "react"
-import { withRouter, RouteComponentProps } from "react-router-dom"
 import { firebase } from "../../firebase/firebase"
 import { ReactComponent as ErrorLogo } from "../../assets/icons/error.svg"
 
-interface SignupProps extends RouteComponentProps<any> {
+interface SignupProps {
   setAuthMethod: React.Dispatch<React.SetStateAction<"login" | "signup">>
 }
 
-const Signup: React.FC<SignupProps> = ({ history, setAuthMethod }) => {
+const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
   const [error, setError] = React.useState<null | string>(null)
 
-  const submitForm = React.useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault()
+  const submitForm = (e: React.FormEvent) => {
+    e.preventDefault()
+    const [
+      userNameInput,
+      emailInput,
+      passwordInput,
+    ]: HTMLFormControlsCollection = (e.target as HTMLFormElement).elements
+    const username = (userNameInput as HTMLInputElement).value.trim()
+    const email = (emailInput as HTMLInputElement).value.trim()
+    const password = (passwordInput as HTMLInputElement).value.trim()
 
-      const [
-        userNameInput,
-        emailInput,
-        passwordInput,
-      ]: HTMLFormControlsCollection = (e.target as HTMLFormElement).elements
-
-      if (
-        (userNameInput as HTMLInputElement).value.trim() &&
-        (emailInput as HTMLInputElement).value.trim() &&
-        (passwordInput as HTMLInputElement).value.trim()
-      ) {
-        firebase
-          .firestore()
-          .collection("users")
-          .doc((userNameInput as HTMLInputElement).value.trim())
-          .get()
-          .then(async (val) => {
-            // If the username was not taken
-            if (val.data() === undefined) {
-              await firebase
-                .auth()
-                .createUserWithEmailAndPassword(
-                  (emailInput as HTMLInputElement).value.trim(),
-                  (passwordInput as HTMLInputElement).value.trim()
-                )
-                .then((userCredential) => {
-                  if (userCredential.user?.displayName) {
-                    const username = (userNameInput as HTMLInputElement).value.trim()
-                    userCredential.user.displayName = username
-                  }
-                })
-                .catch((error) => {
-                  setError(error.message)
-                })
-              history.push("/")
-            } else {
-              setError("This username is already taken.")
-            }
-          })
-          .catch((error) => {
-            setError(error.message)
-          })
-      } else {
-        setError("You need to enter your username, email and password.")
-      }
-    },
-    [history]
-  )
+    if (username && email && password) {
+      firebase
+        .firestore()
+        .collection("users")
+        .doc(username)
+        .get()
+        .then((val) => {
+          // If the username was not taken
+          if (val.data() === undefined) {
+            firebase
+              .auth()
+              .createUserWithEmailAndPassword(email, password)
+              // Save username in displayName
+              .then((userCredential) => {
+                if (userCredential.user) {
+                  userCredential.user.updateProfile({ displayName: username })
+                }
+              })
+              // Save username in firestore
+              .then(() =>
+                firebase
+                  .firestore()
+                  .collection("users")
+                  .doc(username)
+                  .set({})
+                  .catch((err) => setError(err.message))
+              )
+              // And then redirect to home
+              .then(() => window.location.assign("/"))
+              .catch((error) => {
+                setError(error.message)
+              })
+            // If the username was taken
+          } else {
+            setError("This username is already taken.")
+          }
+        })
+        .catch((error) => {
+          setError(error.message)
+        })
+    } else {
+      setError("You need to enter your username, email and password.")
+    }
+  }
 
   return (
     <div className="my-4">
@@ -107,4 +109,4 @@ const Signup: React.FC<SignupProps> = ({ history, setAuthMethod }) => {
   )
 }
 
-export default withRouter(Signup)
+export default Signup
