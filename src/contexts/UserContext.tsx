@@ -1,4 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react"
+import Loading from "../components/ui/loading/Loading"
 import { firebase } from "../firebase/firebase"
 
 type UserContextType = {
@@ -6,7 +7,7 @@ type UserContextType = {
   userData: null | firebase.firestore.DocumentData
 }
 
-export const UserContext = React.createContext<Partial<UserContextType>>({
+export const UserContext = React.createContext<UserContextType>({
   currentUser: null,
   userData: null,
 })
@@ -18,10 +19,7 @@ type UserProviderProps = {
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [pending, setPending] = useState<boolean>(true)
   const [currentUser, setCurrentUser] = useState<firebase.User | null>(null)
-  const [
-    userData,
-    setUserData,
-  ] = useState<firebase.firestore.DocumentData | null>(null)
+  const [userData] = useState<firebase.firestore.DocumentData | null>(null)
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -33,7 +31,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }, [])
 
   if (pending) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
   return (

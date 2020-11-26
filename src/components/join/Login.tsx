@@ -2,6 +2,8 @@ import * as React from "react"
 import { withRouter, RouteComponentProps } from "react-router-dom"
 import { firebase } from "../../firebase/firebase"
 import { ReactComponent as ErrorLogo } from "../../assets/icons/error.svg"
+import Loading from "../ui/loading/Loading"
+import { LoadingContext } from "../../contexts/LoadContext"
 
 interface LoginProps extends RouteComponentProps<any> {
   setAuthMethod: React.Dispatch<React.SetStateAction<"login" | "signup">>
@@ -9,14 +11,18 @@ interface LoginProps extends RouteComponentProps<any> {
 
 const Login: React.FC<LoginProps> = ({ history, setAuthMethod }) => {
   const [error, setError] = React.useState<null | string>(null)
+  const { loading, setLoading } = React.useContext(LoadingContext)
 
   const submitForm = React.useCallback(
     async (e: React.FormEvent) => {
+      setLoading(true)
+
       e.preventDefault()
       const [
         emailInput,
         passwordInput,
       ]: HTMLFormControlsCollection = (e.target as HTMLFormElement).elements
+
       if (
         (emailInput as HTMLInputElement).value.trim() &&
         (passwordInput as HTMLInputElement).value.trim()
@@ -28,16 +34,24 @@ const Login: React.FC<LoginProps> = ({ history, setAuthMethod }) => {
               (emailInput as HTMLInputElement).value.trim(),
               (passwordInput as HTMLInputElement).value.trim()
             )
+            .then(() => setLoading(false))
           history.push("/")
         } catch (error) {
           setError(error.message)
+          setLoading(false)
         }
       } else {
         setError("You need to enter your email and password.")
+        setLoading(false)
       }
     },
-    [history]
+    [history, setLoading]
   )
+
+  if (loading) {
+    return <Loading />
+  }
+
   return (
     <div className="my-4">
       <form onSubmit={submitForm} className="flex flex-col">

@@ -1,15 +1,20 @@
 import * as React from "react"
 import { firebase } from "../../firebase/firebase"
 import { ReactComponent as ErrorLogo } from "../../assets/icons/error.svg"
+import { LoadingContext } from "../../contexts/LoadContext"
+import Loading from "../ui/loading/Loading"
 
 interface SignupProps {
   setAuthMethod: React.Dispatch<React.SetStateAction<"login" | "signup">>
 }
 
 const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
+  const { loading, setLoading } = React.useContext(LoadingContext)
   const [error, setError] = React.useState<null | string>(null)
 
   const submitForm = (e: React.FormEvent) => {
+    setLoading(true)
+
     e.preventDefault()
     const [
       userNameInput,
@@ -45,24 +50,35 @@ const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
                   .collection("users")
                   .doc(username)
                   .set({})
-                  .catch((err) => setError(err.message))
+                  .catch((err) => {
+                    setError(err.message)
+                    setLoading(false)
+                  })
               )
               // And then redirect to home
               .then(() => window.location.assign("/"))
               .catch((error) => {
                 setError(error.message)
+                setLoading(false)
               })
             // If the username was taken
           } else {
             setError("This username is already taken.")
+            setLoading(false)
           }
         })
         .catch((error) => {
           setError(error.message)
+          setLoading(false)
         })
     } else {
       setError("You need to enter your username, email and password.")
+      setLoading(false)
     }
+  }
+
+  if (loading) {
+    return <Loading />
   }
 
   return (
