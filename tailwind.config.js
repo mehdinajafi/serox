@@ -6,6 +6,9 @@ module.exports = {
     maxWidth: {
       content: 'max-content',
     },
+    minWidth: {
+      "96": "24em"
+    },
     extend: {
       colors: {
         primary: {
