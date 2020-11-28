@@ -1,9 +1,12 @@
-import * as React from "react"
-import { useParams } from "react-router-dom"
+import React from "react"
+import MessageForm from "./MessageForm"
 
 const Chat = () => {
-  const { username }: { username: string } = useParams()
-  return <div className="w-full bg-primary-800">{username}</div>
+  return (
+    <div className="w-full p-5 relative">
+      <MessageForm />
+    </div>
+  )
 }
 
 export default Chat
