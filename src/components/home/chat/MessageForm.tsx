@@ -23,7 +23,7 @@ const MessageForm: React.FC = () => {
       const newMessage = {
         message,
         time: new Date().getTime(),
-        from: currentUser?.uid,
+        from: currentUser?.displayName,
       }
 
       // Save the new message in the current user and target user database
