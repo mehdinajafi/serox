@@ -21,7 +21,7 @@ const Message: React.FC<MessageProps> = ({ user }) => {
         userData.chats[user].length - 1
       ]
     )
-  }, [userData.chats[user]])
+  }, [user, userData.chats])
 
   return (
     <>

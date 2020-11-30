@@ -56,7 +56,7 @@ const MessageForm: React.FC = () => {
   }
 
   return (
-    <div className="w-full absolute bottom-1 right-1">
+    <div className="w-full absolute -bottom-12 right-1">
       <form onSubmit={writeNewMessage} className="flex items-center relative">
         <input
           className="w-full p-4 border border-gray-400 rounded focus:outline-none"
