@@ -6,7 +6,7 @@ import UserDataProvider from "../contexts/UserDataContext"
 
 const Home = () => {
   return (
-    <div className="flex">
+    <div className="flex min-h-screen">
       <UserDataProvider>
         <Router basename="#user">
           <Chats />

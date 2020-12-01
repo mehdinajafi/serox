@@ -3,8 +3,8 @@ import "./Loading.css"
 
 const Loading = () => {
   return (
-    <div className="fixed inset-0 bg-white">
-      <div className="h-screen w-screen flex items-center justify-center">
+    <div className="bg-white">
+      <div className="min-h-screen w-screen flex items-center justify-center">
         <div className="sk-cube-grid">
           <div className="sk-cube sk-cube1 bg-yellow"></div>
           <div className="sk-cube sk-cube2 bg-yellow"></div>

@@ -17,7 +17,7 @@ const MessageForm: React.FC = () => {
     ]: HTMLFormControlsCollection = (e.target as HTMLFormElement).elements
     let message = (messageInput as HTMLInputElement).value
 
-    if (message.trim() === "") {
+    if (!message.trim()) {
       alert("Enter Your Message...")
     } else {
       const newMessage = {
@@ -56,7 +56,7 @@ const MessageForm: React.FC = () => {
   }
 
   return (
-    <div className="w-full absolute -bottom-12 right-1">
+    <div className="w-full mt-1">
       <form onSubmit={writeNewMessage} className="flex items-center relative">
         <input
           className="w-full p-4 border border-gray-400 rounded focus:outline-none"

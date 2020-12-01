@@ -9,9 +9,10 @@ const Messages = () => {
 
   return (
     <div className="w-full overflow-x-hidden overflow-y-scroll h-80-vh p-2">
-      {userData.chats[targetUser].map((message) => {
-        return <Message key={message.time} message={message} />
-      })}
+      {userData.chats[targetUser] &&
+        userData.chats[targetUser].map((message) => {
+          return <Message key={message.time} message={message} />
+        })}
     </div>
   )
 }
