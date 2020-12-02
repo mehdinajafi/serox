@@ -8,7 +8,7 @@ const Messages = () => {
   const { targetUser }: { targetUser: string } = useParams()
 
   return (
-    <div className="w-full overflow-x-hidden overflow-y-scroll h-80-vh p-2">
+    <div className="h-80vh w-full overflow-x-hidden overflow-y-scroll p-2">
       {userData.chats[targetUser] &&
         userData.chats[targetUser].map((message) => {
           return <Message key={message.time} message={message} />

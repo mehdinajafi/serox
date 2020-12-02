@@ -4,7 +4,7 @@ import MessagesFrom from "./MessagesFrom"
 
 const Chats = () => {
   return (
-    <div className="min-w-96 h-screen">
+    <div className="min-w-96">
       <Account />
       <MessagesFrom />
     </div>
