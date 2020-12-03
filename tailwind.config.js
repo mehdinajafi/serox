@@ -20,6 +20,7 @@ module.exports = {
       content: "max-content",
     },
     maxWidth: {
+      "3/4": "70%",
       content: "max-content",
     },
     minWidth: {
