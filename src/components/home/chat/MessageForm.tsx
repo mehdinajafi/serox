@@ -46,12 +46,20 @@ const MessageForm: React.FC = () => {
               alert(error.message)
             })
         })
+        .then(() => {
+          // Empty the form to fill out a new form
+          const input = document.querySelector(
+            "#messageInput"
+          ) as HTMLInputElement
+          input.value = ""
+
+          // When a message is sent, it scrolls down to see the last message
+          const messages = document.querySelector("#messages") as HTMLDivElement
+          messages.scrollTop = messages.scrollHeight
+        })
         .catch((error) => {
           alert(error.message)
         })
-
-      let input = document.querySelector("#messageInput") as HTMLInputElement
-      input.value = ""
     }
   }
 
@@ -61,16 +69,15 @@ const MessageForm: React.FC = () => {
         onSubmit={writeNewMessage}
         className="flex items-center w-full relative"
       >
+        <label htmlFor="messageInput"> </label>
         <input
           className="w-full p-3 border border-gray-400 rounded focus:outline-none"
           id="messageInput"
           placeholder="Enter Your Message..."
         />
-        <div className="absolute right-1">
-          <button type="submit">
-            <SendIcon className="w-8 h-8" />
-          </button>
-        </div>
+        <button type="submit" aria-label="send" className="absolute right-1">
+          <SendIcon className="w-8 h-8" />
+        </button>
       </form>
     </div>
   )
