@@ -5,7 +5,7 @@ import Message from "./Message"
 const MessagesFrom = () => {
   const { userData } = useContext(UserDataContext)
   return (
-    <div>
+    <div className="h-70vh overflow-y-scroll">
       {Object.keys(userData.chats).map((user) => (
         <Message user={user} key={user} />
       ))}

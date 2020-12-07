@@ -15,13 +15,13 @@ const Account = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-4 border-b-2 border-gray-300">
+    <div className="h-30vh flex flex-col items-center justify-between py-2 border-b-2 border-gray-300">
       <img
         src={currentUser?.photoURL ? currentUser?.photoURL : avatar}
-        className="w-20 h-20 rounded-full"
+        className="w-20 rounded-full"
         alt={currentUser?.displayName ? currentUser?.displayName : "photo"}
       />
-      <div className="my-4 text-2xl font-bold text-gray-900">
+      <div className="my-1 text-2xl font-bold text-gray-900">
         {currentUser?.displayName}
       </div>
       <button
