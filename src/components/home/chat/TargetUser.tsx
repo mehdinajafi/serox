@@ -4,9 +4,11 @@ import { UserContext } from "../../../contexts/UserContext"
 import { firebase } from "../../../firebase/firebase"
 import { ReactComponent as TrashIcon } from "../../../assets/icons/trash.svg"
 import { ReactComponent as XIcon } from "../../../assets/icons/x.svg"
+import { ShowChatContext } from "../../../contexts/ShowChatContext"
 
 const TargetUser: React.FC = () => {
   const { currentUser } = useContext(UserContext)
+  const { setShowChat } = useContext(ShowChatContext)
   const { targetUser }: { targetUser: string } = useParams()
 
   const deleteChat = () => {
@@ -26,7 +28,7 @@ const TargetUser: React.FC = () => {
         <Link to="/" title="delete" onClick={deleteChat} className="mr-2">
           <TrashIcon className="w-6 text-red-600" />
         </Link>
-        <Link to="/" title="close">
+        <Link to="/" title="close" onClick={() => setShowChat(false)}>
           <XIcon className="w-10 text-red-600" />
         </Link>
       </div>

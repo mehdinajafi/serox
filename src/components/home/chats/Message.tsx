@@ -3,6 +3,7 @@ import moment from "moment"
 import { UserContext } from "../../../contexts/UserContext"
 import { UserDataContext } from "../../../contexts/UserDataContext"
 import { Link } from "react-router-dom"
+import { ShowChatContext } from "../../../contexts/ShowChatContext"
 
 interface MessageProps {
   user: string
@@ -11,6 +12,7 @@ interface MessageProps {
 const Message: React.FC<MessageProps> = ({ user }) => {
   const { userData } = useContext(UserDataContext)
   const { currentUser } = useContext(UserContext)
+  const { setShowChat } = useContext(ShowChatContext)
   const [lastMessage, setLastMessage] = useState<{
     message: string
     time: number
@@ -28,7 +30,11 @@ const Message: React.FC<MessageProps> = ({ user }) => {
 
   return (
     <>
-      <Link to={user} className="flex flex-col p-2 hover:bg-gray-100">
+      <Link
+        to={user}
+        onClick={() => setShowChat(true)}
+        className="flex flex-col p-2 hover:bg-gray-100"
+      >
         {lastMessage && (
           <>
             <div className="flex justify-between items-center">

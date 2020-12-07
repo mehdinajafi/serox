@@ -1,10 +1,17 @@
-import * as React from "react"
+import React, { useContext } from "react"
+import { ShowChatContext } from "../../../contexts/ShowChatContext"
 import Account from "./Account"
 import MessagesFrom from "./MessagesFrom"
 
-const Chats = () => {
+const Chats: React.FC = () => {
+  const { showChat } = useContext(ShowChatContext)
+
   return (
-    <div className="min-w-96">
+    <div
+      className={`${
+        showChat ? "hidden min-w-96" : "block w-full"
+      } md:block md:w-96`}
+    >
       <Account />
       <MessagesFrom />
     </div>
