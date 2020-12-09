@@ -4,7 +4,7 @@ import { firebase } from "../../../firebase/firebase"
 import avatar from "../../../assets/images/avatar.png"
 import { ReactComponent as Signout } from "../../../assets/images/signout.svg"
 
-const Account = () => {
+const Account: React.FC = () => {
   const { currentUser } = React.useContext(UserContext)
 
   const signout = () => {
@@ -15,7 +15,7 @@ const Account = () => {
   }
 
   return (
-    <div className="h-30vh flex flex-col items-center justify-between py-2 border-b-2 border-gray-300">
+    <div className="h-30vh flex flex-col items-center justify-between pt-2">
       <img
         src={currentUser?.photoURL ? currentUser?.photoURL : avatar}
         className="w-20 rounded-full"
