@@ -4,20 +4,23 @@ import Chat from "../components/home/chat/Chat"
 import Chats from "../components/home/chats/Chats"
 import ShowChatProvider from "../contexts/ShowChatContext"
 import UserDataProvider from "../contexts/UserDataContext"
+import UsersDataProvider from "../contexts/UsersDataContext"
 
 const Home = () => {
   return (
     <div className="flex h-screen">
-      <UserDataProvider>
-        <ShowChatProvider>
-          <Router basename="#user">
-            <Chats />
-            <Switch>
-              <Route path="/:targetUser" component={Chat} />
-            </Switch>
-          </Router>
-        </ShowChatProvider>
-      </UserDataProvider>
+      <UsersDataProvider>
+        <UserDataProvider>
+          <ShowChatProvider>
+            <Router basename="#user">
+              <Chats />
+              <Switch>
+                <Route path="/:targetUser" component={Chat} />
+              </Switch>
+            </Router>
+          </ShowChatProvider>
+        </UserDataProvider>
+      </UsersDataProvider>
     </div>
   )
 }

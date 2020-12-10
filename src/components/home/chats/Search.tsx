@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react"
 import { Link } from "react-router-dom"
-import { firebase } from "../../../firebase/firebase"
 import { ReactComponent as XIcon } from "../../../assets/icons/x.svg"
 import { ShowChatContext } from "../../../contexts/ShowChatContext"
+import { UsersContext } from "../../../contexts/UsersDataContext"
 
 const Search: React.FC = () => {
+  const { usersData } = useContext(UsersContext)
   const { setShowChat } = useContext(ShowChatContext)
   const [showResults, setShowResults] = useState<boolean>(false)
   const [usersFound, setUsersFound] = useState<string[] | null>(null)
@@ -18,22 +19,15 @@ const Search: React.FC = () => {
       setShowResults(true)
     }
 
-    firebase
-      .database()
-      .ref("users")
-      .once("value")
-      .then((data) => {
-        const users = Object.keys(data.val())
-        const filtredUsers: string[] | null = users.filter((username) =>
-          username.toLocaleLowerCase().includes(inputValue.toLocaleLowerCase())
-        )
-        setUsersFound(
-          filtredUsers.length === users.length ? null : filtredUsers
-        )
-      })
-      .catch((error) => {
-        alert(error.message)
-      })
+    if (usersData) {
+      const usernames = Object.keys(usersData)
+      const filtredUsers: string[] | null = usernames.filter((username) =>
+        username.toLocaleLowerCase().includes(inputValue.toLocaleLowerCase())
+      )
+      setUsersFound(
+        filtredUsers.length === usernames.length ? null : filtredUsers
+      )
+    }
   }
 
   const closeSearching = () => {
