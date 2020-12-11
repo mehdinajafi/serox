@@ -1,22 +1,17 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react"
 import { firebase } from "../firebase/firebase"
+import { userDataType } from "./UserDataContext"
 
-type usersData<T extends keyof string = keyof string> = {
-  chats: {
-    [key in T]: {
-      message: string
-      time: number
-      from: string
-    }[]
-  }
-}[]
+interface usersData {
+  [user: string]: userDataType
+}
 
-interface UsersContext {
+interface UsersContextType {
   usersData: usersData | null
   setUsersData: React.Dispatch<React.SetStateAction<usersData | null>>
 }
 
-export const UsersContext = createContext<UsersContext>({
+export const UsersContext = createContext<UsersContextType>({
   usersData: null,
   setUsersData: () => {},
 })

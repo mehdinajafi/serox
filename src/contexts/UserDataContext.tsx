@@ -4,9 +4,9 @@ import { firebase } from "../firebase/firebase"
 import { LoadingContext } from "./LoadContext"
 import { UserContext } from "./UserContext"
 
-export interface userData<T extends keyof any = keyof any> {
+export interface userDataType {
   chats: {
-    [key in T]: {
+    [targetUser: string]: {
       message: string
       time: number
       from: string
@@ -14,20 +14,20 @@ export interface userData<T extends keyof any = keyof any> {
   }
 }
 
-type UserDataContext = {
-  userData: userData
+interface UserDataContextType {
+  userData: userDataType
 }
 
-export const UserDataContext = React.createContext<UserDataContext>({
+export const UserDataContext = React.createContext<UserDataContextType>({
   userData: { chats: {} },
 })
 
-type UserDataProviderProps = {
+interface UserDataProviderProps {
   children: React.ReactNode
 }
 
 const UserDataProvider: React.FC<UserDataProviderProps> = ({ children }) => {
-  const [userData, setUserData] = React.useState<userData>({
+  const [userData, setUserData] = React.useState<userDataType>({
     chats: {},
   })
   const { currentUser } = useContext(UserContext)

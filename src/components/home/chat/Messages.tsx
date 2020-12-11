@@ -10,7 +10,7 @@ const Messages = () => {
   useEffect(() => {
     const messages = document.querySelector("#messages") as HTMLDivElement
     messages.scrollTop = messages.scrollHeight
-  }, [])
+  }, [userData])
 
   return (
     <div
