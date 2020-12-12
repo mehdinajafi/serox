@@ -64,14 +64,14 @@ const MessageForm: React.FC = () => {
   }
 
   return (
-    <div className="h-10vh w-full py-1 px-2 flex items-center justify-center">
+    <div className="h-10vh w-full flex items-center justify-center border-t border-gray-200">
       <form
         onSubmit={writeNewMessage}
         className="flex items-center w-full relative"
       >
         <label htmlFor="messageInput"> </label>
         <input
-          className="w-full p-3 border border-gray-400 rounded focus:outline-none"
+          className="w-full px-2 h-full focus:outline-none"
           id="messageInput"
           placeholder="Enter Your Message..."
         />
