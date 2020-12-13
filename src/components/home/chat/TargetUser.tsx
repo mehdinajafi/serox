@@ -22,7 +22,7 @@ const TargetUser: React.FC = () => {
   }
 
   return (
-    <div className="h-10vh flex justify-between items-center p-2">
+    <div className="flex justify-between items-center p-2">
       <div className="font-bold text-2xl text-gray-900">{targetUser}</div>
       <div className="flex items-center">
         <Link to="/" title="delete" onClick={deleteChat} className="mr-2">

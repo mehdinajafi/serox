@@ -10,7 +10,11 @@ const Chat = () => {
   const { showChat } = useContext(ShowChatContext)
 
   return (
-    <div className={`${showChat ? "block" : "hidden"} w-full md:block`}>
+    <div
+      className={`${
+        showChat ? "flex flex-col" : "hidden"
+      } md:flex md:flex-col h-full w-full`}
+    >
       {userData.chats && (
         <>
           <TargetUser />

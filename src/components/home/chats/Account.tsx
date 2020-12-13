@@ -15,7 +15,7 @@ const Account: React.FC = () => {
   }
 
   return (
-    <div className="h-30vh flex flex-col items-center justify-between pt-2">
+    <div className="h-30vh w-full flex flex-col items-center justify-between pt-2">
       <img
         src={currentUser?.photoURL ? currentUser?.photoURL : avatar}
         className="w-20 rounded-full"

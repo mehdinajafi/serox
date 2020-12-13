@@ -25,6 +25,7 @@ module.exports = {
     },
     minWidth: {
       96: "24em",
+      full: "100%",
     },
     extend: {
       colors: {

@@ -64,19 +64,19 @@ const MessageForm: React.FC = () => {
   }
 
   return (
-    <div className="h-10vh w-full flex items-center justify-center border-t border-gray-200">
+    <div className="w-full flex items-center justify-center border-t border-gray-200">
       <form
         onSubmit={writeNewMessage}
         className="flex items-center w-full relative"
       >
         <label htmlFor="messageInput"> </label>
         <input
-          className="w-full px-2 h-full focus:outline-none"
+          className="h-full w-full p-4 focus:outline-none"
           id="messageInput"
           placeholder="Enter Your Message..."
         />
         <button type="submit" aria-label="send" className="absolute right-1">
-          <SendIcon className="w-8 h-8" />
+          <SendIcon className="w-8 h-8 stroke-current text-blue-700" />
         </button>
       </form>
     </div>

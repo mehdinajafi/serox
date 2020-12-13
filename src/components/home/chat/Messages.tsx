@@ -15,7 +15,7 @@ const Messages = () => {
   return (
     <div
       id="messages"
-      className="h-80vh w-full overflow-x-hidden overflow-y-scroll p-2"
+      className="flex-grow w-full overflow-x-hidden overflow-y-scroll p-2"
     >
       {userData.chats[targetUser] &&
         userData.chats[targetUser].map((message) => {

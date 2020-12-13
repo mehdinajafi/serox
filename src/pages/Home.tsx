@@ -8,7 +8,7 @@ import UsersDataProvider from "../contexts/UsersDataContext"
 
 const Home = () => {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-full">
       <UsersDataProvider>
         <UserDataProvider>
           <ShowChatProvider>
