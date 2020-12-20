@@ -17,20 +17,20 @@ type UserProviderProps = {
 }
 
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [pending, setPending] = useState<boolean>(true)
   const [currentUser, setCurrentUser] = useState<firebase.User | null>(null)
   const [userData] = useState<firebase.firestore.DocumentData | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setCurrentUser(user)
+        setLoading(false)
       }
-      setPending(false)
     })
   }, [])
 
-  if (pending) {
+  if (loading) {
     return <Loading />
   }
 

@@ -1,28 +1,21 @@
-import React from "react"
-import { HashRouter as Router, Route, Switch } from "react-router-dom"
-import LoadingProvider from "./contexts/LoadContext"
+import React, { useEffect, useState } from "react"
+import { firebase } from "./firebase/firebase"
 import UserProvider from "./contexts/UserContext"
-import PrivateRoute from "./PrivateRoute"
 import Home from "./pages/Home"
 import Join from "./pages/Join"
 
 const App = () => {
-  return (
-    <LoadingProvider>
-      <UserProvider>
-        <Router>
-          <>
-            {/* If the user is not authenticated, User will be redirected to the join page.
-            Otherwise user will enter to Home. */}
-            <Switch>
-              <PrivateRoute exact path="/" component={Home} />
-              <Route exact path="/join" component={Join} />
-            </Switch>
-          </>
-        </Router>
-      </UserProvider>
-    </LoadingProvider>
-  )
+  const [currentUser, setCurrentUser] = useState<firebase.User | null>(null)
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setCurrentUser(user)
+      }
+    })
+  }, [])
+
+  return <UserProvider>{currentUser ? <Home /> : <Join />}</UserProvider>
 }
 
 export default App

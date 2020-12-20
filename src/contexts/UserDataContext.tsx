@@ -1,7 +1,5 @@
 import React, { useContext, useEffect } from "react"
-import Loading from "../components/ui/loading/Loading"
 import { firebase } from "../firebase/firebase"
-import { LoadingContext } from "./LoadContext"
 import { UserContext } from "./UserContext"
 
 export interface userDataType {
@@ -31,20 +29,16 @@ const UserDataProvider: React.FC<UserDataProviderProps> = ({ children }) => {
     chats: {},
   })
   const { currentUser } = useContext(UserContext)
-  const { loading, setLoading } = useContext(LoadingContext)
 
   useEffect(() => {
-    setLoading(true)
     const listner = firebase
       .database()
       .ref(`users/${currentUser?.displayName}`)
       .on("value", (data) => {
         if (data.val()) {
           setUserData(data.val())
-          setLoading(false)
         } else {
           setUserData({ chats: {} })
-          setLoading(false)
         }
       })
     return () =>
@@ -52,11 +46,7 @@ const UserDataProvider: React.FC<UserDataProviderProps> = ({ children }) => {
         .database()
         .ref(`users/${currentUser?.displayName}`)
         .off("value", listner)
-  }, [currentUser?.displayName, setLoading])
-
-  if (loading) {
-    return <Loading />
-  }
+  }, [currentUser?.displayName])
 
   return (
     <UserDataContext.Provider value={{ userData }}>

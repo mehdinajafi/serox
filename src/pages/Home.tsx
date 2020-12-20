@@ -12,7 +12,7 @@ const Home = () => {
       <UsersDataProvider>
         <UserDataProvider>
           <ShowChatProvider>
-            <Router basename="#user">
+            <Router>
               <Chats />
               <Switch>
                 <Route path="/:targetUser" component={Chat} />

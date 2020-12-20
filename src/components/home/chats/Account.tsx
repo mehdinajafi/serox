@@ -11,7 +11,7 @@ const Account: React.FC = () => {
     firebase
       .auth()
       .signOut()
-      .then(() => window.location.assign("/#/join"))
+      .then(() => window.location.assign("/"))
   }
 
   return (

@@ -1,7 +1,6 @@
 import * as React from "react"
 import { firebase } from "../../firebase/firebase"
 import { ReactComponent as ErrorLogo } from "../../assets/icons/error.svg"
-import { LoadingContext } from "../../contexts/LoadContext"
 import Loading from "../ui/loading/Loading"
 
 interface SignupProps {
@@ -9,12 +8,10 @@ interface SignupProps {
 }
 
 const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
-  const { loading, setLoading } = React.useContext(LoadingContext)
+  const [loading, setLoading] = React.useState<boolean>(true)
   const [error, setError] = React.useState<null | string>(null)
 
   const submitForm = (e: React.FormEvent) => {
-    setLoading(true)
-
     e.preventDefault()
     const [
       userNameInput,
@@ -25,7 +22,10 @@ const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
     const email = (emailInput as HTMLInputElement).value.trim()
     const password = (passwordInput as HTMLInputElement).value.trim()
 
-    if (username && email && password) {
+    if (!username || !email || !password) {
+      setError("You need to enter your username, email and password.")
+      setLoading(false)
+    } else {
       firebase
         .firestore()
         .collection("users")
@@ -55,8 +55,6 @@ const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
                     setLoading(false)
                   })
               )
-              // And then redirect to home
-              .then(() => window.location.assign("/"))
               .catch((error) => {
                 setError(error.message)
                 setLoading(false)
@@ -71,9 +69,6 @@ const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
           setError(error.message)
           setLoading(false)
         })
-    } else {
-      setError("You need to enter your username, email and password.")
-      setLoading(false)
     }
   }
 
