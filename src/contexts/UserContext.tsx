@@ -1,32 +1,55 @@
-import React, { ReactNode, useEffect, useState } from "react"
+import React, { ReactNode, useEffect, useReducer, useState } from "react"
 import Loading from "../components/ui/loading/Loading"
 import { firebase } from "../firebase/firebase"
 
-type UserContextType = {
+interface UserContextType {
   currentUser: null | firebase.User
-  userData: null | firebase.firestore.DocumentData
+  dispatch: React.Dispatch<{
+    type: string
+    payload: {
+      user: firebase.User
+    }
+  }>
 }
 
 export const UserContext = React.createContext<UserContextType>({
   currentUser: null,
-  userData: null,
+  dispatch: () => {},
 })
 
-type UserProviderProps = {
+interface UserProviderProps {
   children: ReactNode
 }
 
+const intialState = {
+  user: null,
+}
+
+const reducer = (
+  state: { user: firebase.User | null },
+  action: { type: string; payload: { user: firebase.User } }
+) => {
+  switch (action.type) {
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.payload.user,
+      }
+    default:
+      return state
+  }
+}
+
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<firebase.User | null>(null)
-  const [userData] = useState<firebase.firestore.DocumentData | null>(null)
+  const [state, dispatch] = useReducer(reducer, intialState)
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        setCurrentUser(user)
-        setLoading(false)
+        dispatch({ type: "SET_USER", payload: { user } })
       }
+      setLoading(false)
     })
   }, [])
 
@@ -35,7 +58,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ currentUser, userData }}>
+    <UserContext.Provider value={{ currentUser: state.user, dispatch }}>
       {children}
     </UserContext.Provider>
   )

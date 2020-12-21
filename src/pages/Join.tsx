@@ -1,4 +1,5 @@
 import * as React from "react"
+import AnonymousLogin from "../components/join/AnonymousLogin"
 import Login from "../components/join/Login"
 import Signup from "../components/join/Signup"
 
@@ -7,12 +8,14 @@ const Join = () => {
     "login"
   )
   return (
-    <div className="container">
+    <div className="container h-full flex items-center">
       <div className="w-11/12 sm:w-3/6 mx-auto">
-        <h1 className="my-2 text-center font-bold text-2xl text-gray-900">
-          {authMethod === "login" ? "Log in" : "Create account"}
-        </h1>
-        <hr></hr>
+        <AnonymousLogin />
+        <div>
+          <h1 className="my-2 text-center font-bold text-2xl text-gray-900">
+            {authMethod === "login" ? "Or Log in" : "Or Create account"}
+          </h1>
+        </div>
         {authMethod === "login" ? (
           <Login setAuthMethod={setAuthMethod} />
         ) : (

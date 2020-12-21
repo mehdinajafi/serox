@@ -8,8 +8,8 @@ interface SignupProps {
 }
 
 const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
-  const [loading, setLoading] = React.useState<boolean>(true)
   const [error, setError] = React.useState<null | string>(null)
+  const [loading, setLoading] = React.useState<boolean>(false)
 
   const submitForm = (e: React.FormEvent) => {
     e.preventDefault()
@@ -24,8 +24,8 @@ const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
 
     if (!username || !email || !password) {
       setError("You need to enter your username, email and password.")
-      setLoading(false)
     } else {
+      setLoading(true)
       firebase
         .firestore()
         .collection("users")

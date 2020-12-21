@@ -9,10 +9,12 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = ({ setAuthMethod }) => {
   const [error, setError] = React.useState<null | string>(null)
-  const [loading, setLoading] = React.useState<boolean>(true)
+  const [loading, setLoading] = React.useState<boolean>(false)
 
   const submitForm = async (e: React.FormEvent) => {
     e.preventDefault()
+    setLoading(true)
+
     const [
       emailInput,
       passwordInput,
