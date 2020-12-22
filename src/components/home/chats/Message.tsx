@@ -4,6 +4,7 @@ import { UserContext } from "../../../contexts/UserContext"
 import { UserDataContext } from "../../../contexts/UserDataContext"
 import { Link } from "react-router-dom"
 import { ShowChatContext } from "../../../contexts/ShowChatContext"
+import { validate as uuidValidate } from "uuid"
 
 interface MessageProps {
   user: string
@@ -39,7 +40,11 @@ const Message: React.FC<MessageProps> = ({ user }) => {
           <>
             <div className="flex justify-between items-center">
               <div className="font-bold text-gray-900">
-                {user === currentUser?.displayName ? "Saved Messages" : user}
+                {uuidValidate(user)
+                  ? `U-${user.slice(24, 36)}`
+                  : user === currentUser?.displayName
+                  ? "Saved Messages"
+                  : user}
               </div>
               <div className="text-sm text-gray-500">
                 {new Date(lastMessage.time).getDay() === new Date().getDay()
@@ -50,14 +55,16 @@ const Message: React.FC<MessageProps> = ({ user }) => {
             <div className="flex items-center text-gray-500">
               <div className="flex items-center">
                 <div className="mr-1">
-                  {lastMessage.from === currentUser?.displayName
-                    ? "you:"
+                  {uuidValidate(user)
+                    ? `U-${user.slice(24, 36)}: `
+                    : lastMessage.from === currentUser?.displayName
+                    ? "you: "
                     : lastMessage.from}
                 </div>
                 <div>
-                  {lastMessage.message.length >= 40
-                    ? `${lastMessage.message.slice(0, 40)}...`
-                    : lastMessage.message.slice(0, 40)}
+                  {lastMessage.message.length >= 20
+                    ? `${lastMessage.message.slice(0, 20)}...`
+                    : lastMessage.message.slice(0, 20)}
                 </div>
               </div>
             </div>
