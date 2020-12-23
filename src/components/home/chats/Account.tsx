@@ -1,7 +1,6 @@
 import * as React from "react"
 import { UserContext } from "../../../contexts/UserContext"
 import { firebase } from "../../../firebase/firebase"
-import avatar from "../../../assets/images/avatar.png"
 import { ReactComponent as Signout } from "../../../assets/images/signout.svg"
 import { validate as uuidValidate } from "uuid"
 
@@ -16,18 +15,15 @@ const Account: React.FC = () => {
   }
 
   return (
-    <div className="h-30vh w-full flex flex-col items-center justify-between pt-2">
-      <img
-        src={currentUser?.photoURL ? currentUser?.photoURL : avatar}
-        className="w-20 rounded-full"
-        alt={currentUser?.displayName ? currentUser?.displayName : "photo"}
-      />
-      {currentUser?.displayName && (
+    <div className="h-20vh w-full flex flex-col items-center justify-evenly pt-2">
+      {currentUser?.displayName ? (
         <div className="my-1 text-2xl font-bold text-gray-900">
           {uuidValidate(currentUser.displayName)
             ? `U-${currentUser.displayName.slice(24, 36)}`
             : currentUser?.displayName}
         </div>
+      ) : (
+        <div className="h-10 w-48 rounded animate-pulse bg-gray-300"></div>
       )}
       <button
         onClick={signout}
