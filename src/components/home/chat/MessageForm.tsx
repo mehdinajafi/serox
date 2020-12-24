@@ -27,39 +27,47 @@ const MessageForm: React.FC = () => {
       }
 
       // Save the new message in the current user and target user database
-      firebase
-        .database()
-        .ref(`users/${currentUser?.displayName}/chats/${targetUser}`)
-        .set([
-          ...(userData.chats[targetUser] ? userData.chats[targetUser] : []),
-          newMessage,
-        ])
-        .then(() => {
-          firebase
-            .database()
-            .ref(`users/${targetUser}/chats/${currentUser?.displayName}`)
-            .set([
-              ...(userData.chats[targetUser] ? userData.chats[targetUser] : []),
-              newMessage,
-            ])
-            .catch((error) => {
-              alert(error.message)
-            })
-        })
-        .then(() => {
-          // Empty the form to fill out a new form
-          const input = document.querySelector(
-            "#messageInput"
-          ) as HTMLInputElement
-          input.value = ""
+      if (userData.chats) {
+        firebase
+          .database()
+          .ref(`users/${currentUser?.displayName}/chats/${targetUser}`)
+          .set([
+            ...(userData.chats[targetUser] ? userData.chats[targetUser] : []),
+            newMessage,
+          ])
+          .then(() => {
+            if (userData.chats) {
+              firebase
+                .database()
+                .ref(`users/${targetUser}/chats/${currentUser?.displayName}`)
+                .set([
+                  ...(userData.chats[targetUser]
+                    ? userData.chats[targetUser]
+                    : []),
+                  newMessage,
+                ])
+                .catch((error) => {
+                  alert(error.message)
+                })
+            }
+          })
+          .then(() => {
+            // Empty the form to fill out a new form
+            const input = document.querySelector(
+              "#messageInput"
+            ) as HTMLInputElement
+            input.value = ""
 
-          // When a message is sent, it scrolls down to see the last message
-          const messages = document.querySelector("#messages") as HTMLDivElement
-          messages.scrollTop = messages.scrollHeight
-        })
-        .catch((error) => {
-          alert(error.message)
-        })
+            // When a message is sent, it scrolls down to see the last message
+            const messages = document.querySelector(
+              "#messages"
+            ) as HTMLDivElement
+            messages.scrollTop = messages.scrollHeight
+          })
+          .catch((error) => {
+            alert(error.message)
+          })
+      }
     }
   }
 

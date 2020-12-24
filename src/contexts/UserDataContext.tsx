@@ -9,7 +9,7 @@ export interface userDataType {
       time: number
       from: string
     }[]
-  }
+  } | null
 }
 
 interface UserDataContextType {
@@ -17,7 +17,7 @@ interface UserDataContextType {
 }
 
 export const UserDataContext = React.createContext<UserDataContextType>({
-  userData: { chats: {} },
+  userData: { chats: null },
 })
 
 interface UserDataProviderProps {
@@ -26,7 +26,7 @@ interface UserDataProviderProps {
 
 const UserDataProvider: React.FC<UserDataProviderProps> = ({ children }) => {
   const [userData, setUserData] = React.useState<userDataType>({
-    chats: {},
+    chats: null,
   })
   const { currentUser } = useContext(UserContext)
 

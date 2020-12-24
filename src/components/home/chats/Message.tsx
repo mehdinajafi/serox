@@ -22,11 +22,13 @@ const Message: React.FC<MessageProps> = ({ user }) => {
 
   useEffect(() => {
     // Sort from first to last and select the last message
-    setLastMessage(
-      userData.chats[user].sort((a, b) => a.time - b.time)[
-        userData.chats[user].length - 1
-      ]
-    )
+    if (userData.chats) {
+      setLastMessage(
+        userData.chats[user].sort((a, b) => a.time - b.time)[
+          userData.chats[user].length - 1
+        ]
+      )
+    }
   }, [user, userData.chats])
 
   return (
