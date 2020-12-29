@@ -20,6 +20,7 @@ const TargetUser: React.FC = () => {
       .catch((error) => {
         alert(error.message)
       })
+    setShowChat(false)
   }
 
   return (

@@ -18,6 +18,7 @@ const Messages = () => {
       className="flex-grow w-full overflow-x-hidden overflow-y-scroll p-2"
     >
       {userData.chats &&
+        userData.chats[targetUser] &&
         userData.chats[targetUser].map((message) => {
           return <Message key={message.time} message={message} />
         })}
