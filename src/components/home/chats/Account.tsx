@@ -15,7 +15,7 @@ const Account: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-evenly p-2">
+    <div className="flex justify-between items-center p-2">
       {currentUser?.displayName ? (
         <div className="my-1 text-2xl font-bold text-gray-900">
           {uuidValidate(currentUser.displayName)
@@ -27,10 +27,10 @@ const Account: React.FC = () => {
       )}
       <button
         onClick={signout}
-        className="flex items-center p-3 rounded bg-red-600 hover:bg-red-700 text-white"
+        title="Signout"
+        className="flex p-2 rounded-full bg-red-600 hover:bg-red-700 text-white"
       >
-        <Signout className="w-6 h-6 mr-2" />
-        <span>Sign out</span>
+        <Signout className="w-6 h-6 m-auto" />
       </button>
     </div>
   )

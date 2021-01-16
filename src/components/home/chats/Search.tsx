@@ -55,7 +55,7 @@ const Search: React.FC = () => {
         />
       </div>
       {showResults && (
-        <div className="flex flex-col overflow-y-scroll hide-scrollbar fixed top-36 bottom-0 w-full md:w-96 bg-white border">
+        <div className="flex flex-col overflow-y-scroll hide-scrollbar fixed top-24 bottom-0 w-full md:w-96 bg-white border">
           {usersFound &&
             usersFound.map((username) => (
               <Link
