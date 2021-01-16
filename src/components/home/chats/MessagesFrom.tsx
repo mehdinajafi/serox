@@ -5,7 +5,7 @@ import Message from "./Message"
 const MessagesFrom: React.FC = () => {
   const { userData } = useContext(UserDataContext)
   return (
-    <div className="h-70vh w-full overflow-y-scroll">
+    <div className="flex-grow hide-scrollbar w-full overflow-y-scroll">
       {userData.chats
         ? Object.keys(userData.chats).map((user) => (
             <Message user={user} key={user} />

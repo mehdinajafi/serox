@@ -23,3 +23,12 @@ code {
 #messages {
   scroll-behavior: smooth;
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+.hide-scrollbar {
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+}

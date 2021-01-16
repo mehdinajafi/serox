@@ -15,7 +15,7 @@ const Account: React.FC = () => {
   }
 
   return (
-    <div className="h-20vh w-full flex flex-col items-center justify-evenly pt-2">
+    <div className="flex flex-col items-center justify-evenly p-2">
       {currentUser?.displayName ? (
         <div className="my-1 text-2xl font-bold text-gray-900">
           {uuidValidate(currentUser.displayName)

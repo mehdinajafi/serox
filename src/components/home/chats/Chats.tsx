@@ -10,8 +10,8 @@ const Chats: React.FC = () => {
   return (
     <div
       className={`${
-        !showChat ? "block w-full" : "hidden w-96"
-      } md:block md:w-96`}
+        !showChat ? "flex flex-col w-full" : "hidden w-96"
+      } md:w-96 md:flex md:flex-col h-full`}
     >
       <Account />
       <Search />

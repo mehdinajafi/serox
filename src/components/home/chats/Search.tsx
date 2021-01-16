@@ -40,23 +40,22 @@ const Search: React.FC = () => {
   }
 
   return (
-    <div className="relative w-full h-10vh flex items-center">
-      <div className="relative w-full mx-1">
+    <div className="relative w-full flex items-center">
+      <div className="flex relative w-full">
         <input
           id="searchInput"
-          className="w-full p-2 border border-gray-500 rounded focus:outline-none"
-          placeholder="Search"
+          className="flex-grow p-2 bg-gray-200 focus:bg-white focus:outline-none"
+          placeholder="Search for users..."
           type="text"
           onInput={(e) => SearchBetweenUsers(e)}
         />
         <XIcon
           onClick={closeSearching}
-          className="absolute top-0.5 right-0 cursor-pointer w-10 text-gray-500"
+          className="absolute top-0.5 right-1.5 cursor-pointer w-10"
         />
       </div>
-
       {showResults && (
-        <div className="flex flex-col w-full h-70vh overflow-y-scroll absolute top-14 bg-white border rounded">
+        <div className="flex flex-col overflow-y-scroll hide-scrollbar fixed top-36 bottom-0 w-full md:w-96 bg-white border">
           {usersFound &&
             usersFound.map((username) => (
               <Link
