@@ -1,6 +1,7 @@
 {
   "short_name": "Serox",
-  "name": "An Anonymous Chat Service.",
+  "name": "Serox",
+  "description": "An Anonymous Chat Service",
   "icons": [
     {
       "src": "favicon.ico",
