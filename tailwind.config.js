@@ -1,6 +1,15 @@
 const defaultTheme = require("tailwindcss/defaultTheme")
 
 module.exports = {
+  purge: {
+    enabled: false,
+    content: [
+      "./src/components/**/**/*.tsx",
+      "./src/components/**/*.tsx",
+      "./src/pages/*.tsx",
+      "./src/*.tsx",
+    ],
+  },
   theme: {
     maxHeight: {
       content: "max-content",
