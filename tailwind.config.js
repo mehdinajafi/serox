@@ -1,6 +1,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme")
 
 module.exports = {
+  darkMode: "media",
   purge: {
     enabled: false,
     content: [
@@ -61,8 +62,9 @@ module.exports = {
           900: "#113355",
         },
         dark: {
-          800: "rgba(0, 0, 0, 0.5)",
-          900: "rgba(0, 0, 0, 1)",
+          700: "#1f1f20",
+          800: "#181819",
+          900: "#020203",
         },
       },
       zIndex: {
