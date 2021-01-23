@@ -12,7 +12,7 @@ const Join = () => {
       <div className="w-11/12 sm:w-3/6 mx-auto">
         <AnonymousLogin />
         <div>
-          <h1 className="my-2 text-center font-bold text-2xl text-gray-900">
+          <h1 className="my-2 text-center font-bold text-2xl text-gray-900 dark:text-gray-400">
             {authMethod === "login" ? "Or Log in" : "Or Create account"}
           </h1>
         </div>

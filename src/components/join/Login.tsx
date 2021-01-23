@@ -52,12 +52,12 @@ const Login: React.FC<LoginProps> = ({ setAuthMethod }) => {
         <input
           type="email"
           placeholder="Email"
-          className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline"
+          className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline dark:bg-transparent dark:text-gray-300"
         />
         <input
           type="password"
           placeholder="Password"
-          className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline"
+          className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline dark:bg-transparent dark:text-gray-300"
         />
         {error && (
           <div className="flex items-center mb-2 p-2 rounded border border-red-700">
@@ -72,7 +72,7 @@ const Login: React.FC<LoginProps> = ({ setAuthMethod }) => {
           Log in
         </button>
       </form>
-      <div className="my-4 font-bold text-center text-gray-900">
+      <div className="my-4 font-bold text-center text-gray-900 dark:text-gray-400">
         New to Serox?{" "}
         <button
           className="font-bold text-blue-700 hover:underline focus:outline-none"

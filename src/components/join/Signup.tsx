@@ -82,17 +82,17 @@ const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
         <input
           type="text"
           placeholder="Username"
-          className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline"
+          className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline dark:bg-transparent dark:text-gray-300"
         />
         <input
           type="email"
           placeholder="Email"
-          className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline"
+          className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline dark:bg-transparent dark:text-gray-300"
         />
         <input
           type="password"
           placeholder="Password"
-          className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline"
+          className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline dark:bg-transparent dark:text-gray-300"
         />
         {error && (
           <div className="flex items-center mb-2 p-2 rounded border border-red-700">
@@ -107,7 +107,7 @@ const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
           Create account
         </button>
       </form>
-      <div className="my-4 font-bold text-center text-gray-900">
+      <div className="my-4 font-bold text-center text-gray-900 dark:text-gray-400">
         Already a seroxer?{" "}
         <button
           className="font-bold text-blue-700 hover:underline focus:outline-none"
