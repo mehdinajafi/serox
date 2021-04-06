@@ -23,7 +23,7 @@ const Chat = () => {
     <div
       className={`${
         showChat ? "flex flex-col" : "hidden"
-      } md:flex md:flex-col md:w-full-96 w-full h-full`}
+      } md:flex md:flex-col md:w-full-96 w-full h-full border-l border-gray-200 `}
     >
       {userData.chats && (
         <>

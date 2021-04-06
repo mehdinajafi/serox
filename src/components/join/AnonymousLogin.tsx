@@ -37,7 +37,7 @@ const AnonymousLogin = () => {
     <div className="dark:bg-dark-800 dark:text-gray-400">
       <button
         onClick={signInAnonymously}
-        className="w-full py-2 mt-4 flex flex-col items-center border rounded hover:bg-gray-300 dark:border-gray-400 dark:hover:bg-dark-900"
+        className="w-full py-2 mt-4 flex flex-col items-center border rounded hover:bg-gray-300 dark:border-gray-400 dark:hover:bg-black"
       >
         <div className="text-2xl font-bold">Enter Anonymously</div>
         <div className="text-sm">No Information Needed</div>

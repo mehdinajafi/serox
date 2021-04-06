@@ -32,7 +32,6 @@ module.exports = {
     },
     extend: {
       spacing: {
-        ...defaultTheme.spacing,
         "10vh": "10vh",
         "20vh": "20vh",
         "30vh": "30vh",
@@ -45,6 +44,7 @@ module.exports = {
         "full-96": "calc(100% - 24rem)",
         screen: "100vh",
         full: "100%",
+        ...defaultTheme.spacing,
       },
       colors: {
         primary: {
@@ -61,24 +61,10 @@ module.exports = {
         darkBlue: {
           900: "#113355",
         },
-        dark: {
-          700: "#1f1f20",
-          800: "#181819",
-          900: "#020203",
-        },
+        "dark-grey": "#121212",
       },
       zIndex: {
         "-1": "-1",
-      },
-      inset: {
-        0: 0,
-        auto: "auto",
-        hide: "-100vh",
-        1: "1em",
-        2: "2em",
-        3: "3em",
-        4: "4em",
-        5: "5em",
       },
       transitionProperty: {
         position: "top, right, bottom, left",
@@ -87,5 +73,8 @@ module.exports = {
     container: {
       center: true,
     },
+  },
+  variants: {
+    extend: {},
   },
 }

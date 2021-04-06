@@ -40,5 +40,6 @@ code {
 
 .hide-scrollbar {
   overflow: -moz-scrollbars-none;
+  scrollbar-width: none;
   -ms-overflow-style: none;
 }

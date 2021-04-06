@@ -79,7 +79,7 @@ const MessageForm: React.FC = () => {
       >
         <label htmlFor="messageInput"> </label>
         <input
-          className="h-full w-full p-4 focus:outline-none"
+          className="h-full w-full p-4 focus:outline-none dark:bg-transparent dark:text-gray-200"
           id="messageInput"
           placeholder="Enter Your Message..."
         />

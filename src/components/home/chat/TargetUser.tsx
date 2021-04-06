@@ -24,8 +24,8 @@ const TargetUser: React.FC = () => {
   }
 
   return (
-    <div className="flex justify-between items-center p-2">
-      <div className="font-bold text-2xl text-gray-900">
+    <div className="flex justify-between items-center p-2 border-b border-gray-200">
+      <div className="font-bold text-2xl text-gray-900 dark:text-gray-200">
         {uuidValidate(targetUser)
           ? `U-${targetUser.slice(24, 36)}`
           : targetUser}

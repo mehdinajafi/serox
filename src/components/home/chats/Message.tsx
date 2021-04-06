@@ -36,12 +36,12 @@ const Message: React.FC<MessageProps> = ({ user }) => {
       <Link
         to={user}
         onClick={() => setShowChat(true)}
-        className="flex flex-col p-2 hover:bg-gray-100"
+        className="flex flex-col p-2 hover:bg-gray-100 dark:hover:bg-transparent"
       >
         {lastMessage && (
           <>
             <div className="flex justify-between items-center">
-              <div className="font-bold text-gray-900">
+              <div className="font-bold text-gray-900 dark:text-gray-200">
                 {uuidValidate(user)
                   ? `U-${user.slice(24, 36)}`
                   : user === currentUser?.displayName
