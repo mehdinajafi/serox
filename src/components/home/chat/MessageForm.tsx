@@ -1,20 +1,20 @@
 import React, { useContext } from "react"
 import { firebase } from "../../../firebase/firebase"
 import { ReactComponent as SendIcon } from "../../../assets/icons/send.svg"
-import { UserContext } from "../../../contexts/UserContext"
+import { AuthContext } from "../../../contexts/AuthContext"
 import { useParams } from "react-router-dom"
 import { UserDataContext } from "../../../contexts/UserDataContext"
 
 const MessageForm: React.FC = () => {
-  const { currentUser } = useContext(UserContext)
+  const { currentUser } = useContext(AuthContext)
   const { userData } = useContext(UserDataContext)
   const { targetUser }: { targetUser: string } = useParams()
 
   const writeNewMessage = (e: React.FormEvent) => {
     e.preventDefault()
-    const [
-      messageInput,
-    ]: HTMLFormControlsCollection = (e.target as HTMLFormElement).elements
+    const [messageInput]: HTMLFormControlsCollection = (
+      e.target as HTMLFormElement
+    ).elements
     let message = (messageInput as HTMLInputElement).value
 
     if (!message.trim()) {

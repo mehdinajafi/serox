@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react"
 import { firebase } from "../firebase/firebase"
-import { UserContext } from "./UserContext"
+import { AuthContext } from "./AuthContext"
 
 export interface userDataType {
   chats: {
@@ -28,7 +28,7 @@ const UserDataProvider: React.FC<UserDataProviderProps> = ({ children }) => {
   const [userData, setUserData] = React.useState<userDataType>({
     chats: null,
   })
-  const { currentUser } = useContext(UserContext)
+  const { currentUser } = useContext(AuthContext)
 
   useEffect(() => {
     const listner = firebase

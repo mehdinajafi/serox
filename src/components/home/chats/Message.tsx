@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import moment from "moment"
-import { UserContext } from "../../../contexts/UserContext"
+import { AuthContext } from "../../../contexts/AuthContext"
 import { UserDataContext } from "../../../contexts/UserDataContext"
 import { Link } from "react-router-dom"
 import { ShowChatContext } from "../../../contexts/ShowChatContext"
@@ -12,7 +12,7 @@ interface MessageProps {
 
 const Message: React.FC<MessageProps> = ({ user }) => {
   const { userData } = useContext(UserDataContext)
-  const { currentUser } = useContext(UserContext)
+  const { currentUser } = useContext(AuthContext)
   const { setShowChat } = useContext(ShowChatContext)
   const [lastMessage, setLastMessage] = useState<{
     message: string

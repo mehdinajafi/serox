@@ -29,11 +29,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       setTheme(localStorageTheme)
     }
 
-    if (
-      localStorageTheme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
+    if (localStorageTheme === "dark") {
       document.documentElement.classList.add("dark")
     } else {
       document.documentElement.classList.remove("dark")

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { UserContext } from "../../../contexts/UserContext"
+import { AuthContext } from "../../../contexts/AuthContext"
 import { firebase } from "../../../firebase/firebase"
 import { ReactComponent as Signout } from "../../../assets/images/signout.svg"
 import { validate as uuidValidate } from "uuid"
@@ -8,7 +8,7 @@ import { ReactComponent as SunIcon } from "../../../assets/icons/sun.svg"
 import { ReactComponent as MoonIcon } from "../../../assets/icons/moon.svg"
 
 const Account: React.FC = () => {
-  const { currentUser } = React.useContext(UserContext)
+  const { currentUser } = React.useContext(AuthContext)
   const { theme, changeTheme } = React.useContext(ThemeContext)
 
   const signout = () => {

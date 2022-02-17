@@ -15,10 +15,9 @@ const Login: React.FC<LoginProps> = ({ setAuthMethod }) => {
     e.preventDefault()
     setLoading(true)
 
-    const [
-      emailInput,
-      passwordInput,
-    ]: HTMLFormControlsCollection = (e.target as HTMLFormElement).elements
+    const [emailInput, passwordInput]: HTMLFormControlsCollection = (
+      e.target as HTMLFormElement
+    ).elements
 
     if (
       (emailInput as HTMLInputElement).value.trim() &&
@@ -33,7 +32,7 @@ const Login: React.FC<LoginProps> = ({ setAuthMethod }) => {
           )
           .then(() => setLoading(false))
       } catch (error) {
-        setError(error.message)
+        // setError(error.message)
         setLoading(false)
       }
     } else {

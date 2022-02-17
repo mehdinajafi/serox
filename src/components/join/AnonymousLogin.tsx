@@ -1,11 +1,11 @@
 import * as React from "react"
 import { v4 as uuidv4 } from "uuid"
-import { UserContext } from "../../contexts/UserContext"
+import { AuthContext } from "../../contexts/AuthContext"
 import { firebase } from "../../firebase/firebase"
 import Loading from "../ui/loading/Loading"
 
 const AnonymousLogin = () => {
-  const { dispatch } = React.useContext(UserContext)
+  const { setCurrentUser } = React.useContext(AuthContext)
   const [loading, setLoading] = React.useState<boolean>(false)
 
   const signInAnonymously = () => {
@@ -17,10 +17,7 @@ const AnonymousLogin = () => {
       .then(async (userCredential) => {
         if (userCredential.user) {
           await userCredential.user.updateProfile({ displayName: uuidv4() })
-          dispatch({
-            type: "SET_USER",
-            payload: { user: userCredential.user },
-          })
+          setCurrentUser(userCredential.user)
         }
       })
       .catch(() => {

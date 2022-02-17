@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { Link, useParams } from "react-router-dom"
-import { UserContext } from "../../../contexts/UserContext"
+import { AuthContext } from "../../../contexts/AuthContext"
 import { firebase } from "../../../firebase/firebase"
 import { ReactComponent as TrashIcon } from "../../../assets/icons/trash.svg"
 import { ReactComponent as XIcon } from "../../../assets/icons/x.svg"
@@ -8,7 +8,7 @@ import { ShowChatContext } from "../../../contexts/ShowChatContext"
 import { validate as uuidValidate } from "uuid"
 
 const TargetUser: React.FC = () => {
-  const { currentUser } = useContext(UserContext)
+  const { currentUser } = useContext(AuthContext)
   const { setShowChat } = useContext(ShowChatContext)
   const { targetUser }: { targetUser: string } = useParams()
 

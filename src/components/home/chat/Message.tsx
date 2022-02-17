@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { UserContext } from "../../../contexts/UserContext"
+import { AuthContext } from "../../../contexts/AuthContext"
 import moment from "moment"
 
 interface MessageProps {
@@ -11,7 +11,7 @@ interface MessageProps {
 }
 
 const Message: React.FC<MessageProps> = ({ message }) => {
-  const { currentUser } = useContext(UserContext)
+  const { currentUser } = useContext(AuthContext)
   return (
     <>
       {message.from === currentUser?.displayName ? (
