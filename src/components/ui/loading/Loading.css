@@ -9,6 +9,7 @@
   float: left;
   -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
   animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+  background-color: rgb(37, 99, 235);
 }
 .sk-cube-grid .sk-cube1 {
   -webkit-animation-delay: 0.2s;

@@ -1,29 +1,19 @@
 import * as React from "react"
-import { v4 as uuidv4 } from "uuid"
 import { AuthContext } from "../../contexts/AuthContext"
-import { firebase } from "../../firebase/firebase"
 import Loading from "../ui/loading/Loading"
 
 const AnonymousLogin = () => {
-  const { setCurrentUser } = React.useContext(AuthContext)
+  const { loginAnonymously } = React.useContext(AuthContext)
   const [loading, setLoading] = React.useState<boolean>(false)
 
-  const signInAnonymously = () => {
+  const signInAnonymously = async () => {
     setLoading(true)
 
-    firebase
-      .auth()
-      .signInAnonymously()
-      .then(async (userCredential) => {
-        if (userCredential.user) {
-          await userCredential.user.updateProfile({ displayName: uuidv4() })
-          setCurrentUser(userCredential.user)
-        }
-      })
-      .catch(() => {
-        alert("Something went wrong. Please try again.")
-        setLoading(false)
-      })
+    try {
+      await loginAnonymously()
+    } catch (error) {
+      setLoading(false)
+    }
   }
 
   if (loading) {

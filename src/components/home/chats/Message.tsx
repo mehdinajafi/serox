@@ -1,24 +1,19 @@
 import React, { useContext, useEffect, useState } from "react"
-import moment from "moment"
+import format from "date-fns/format"
 import { AuthContext } from "../../../contexts/AuthContext"
-import { UserDataContext } from "../../../contexts/UserDataContext"
+import { IMessage, UserDataContext } from "../../../contexts/UserDataContext"
 import { Link } from "react-router-dom"
-import { ShowChatContext } from "../../../contexts/ShowChatContext"
 import { validate as uuidValidate } from "uuid"
 
-interface MessageProps {
+interface IMessageComponent {
   user: string
+  changeShowChat: (showChat: boolean) => void
 }
 
-const Message: React.FC<MessageProps> = ({ user }) => {
+const Message: React.FC<IMessageComponent> = ({ user, changeShowChat }) => {
   const { userData } = useContext(UserDataContext)
   const { currentUser } = useContext(AuthContext)
-  const { setShowChat } = useContext(ShowChatContext)
-  const [lastMessage, setLastMessage] = useState<{
-    message: string
-    time: number
-    from: string
-  } | null>(null)
+  const [lastMessage, setLastMessage] = useState<IMessage | null>(null)
 
   useEffect(() => {
     // Sort from first to last and select the last message
@@ -32,14 +27,14 @@ const Message: React.FC<MessageProps> = ({ user }) => {
   }, [user, userData.chats])
 
   return (
-    <>
+    <React.Fragment>
       <Link
         to={user}
-        onClick={() => setShowChat(true)}
+        onClick={() => changeShowChat(true)}
         className="flex flex-col p-2 hover:bg-gray-100 dark:hover:bg-transparent"
       >
         {lastMessage && (
-          <>
+          <React.Fragment>
             <div className="flex justify-between items-center">
               <div className="font-bold text-gray-900 dark:text-gray-200">
                 {uuidValidate(user)
@@ -50,10 +45,11 @@ const Message: React.FC<MessageProps> = ({ user }) => {
               </div>
               <div className="text-sm text-gray-500">
                 {new Date(lastMessage.time).getDay() === new Date().getDay()
-                  ? moment(lastMessage.time).format("h:mm a")
-                  : moment(lastMessage.time).format("Do MMM YY, h:mm a")}
+                  ? format(lastMessage.time, "K:m aaa")
+                  : format(lastMessage.time, "yy/M/d, K:m aaa")}
               </div>
             </div>
+
             <div className="flex items-center text-gray-500">
               <div className="flex items-center">
                 <div className="mr-1">
@@ -70,10 +66,10 @@ const Message: React.FC<MessageProps> = ({ user }) => {
                 </div>
               </div>
             </div>
-          </>
+          </React.Fragment>
         )}
       </Link>
-    </>
+    </React.Fragment>
   )
 }
 

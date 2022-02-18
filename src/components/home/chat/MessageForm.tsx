@@ -1,72 +1,28 @@
-import React, { useContext } from "react"
-import { firebase } from "../../../firebase/firebase"
-import { ReactComponent as SendIcon } from "../../../assets/icons/send.svg"
-import { AuthContext } from "../../../contexts/AuthContext"
+import { useContext, useState } from "react"
 import { useParams } from "react-router-dom"
 import { UserDataContext } from "../../../contexts/UserDataContext"
+import { ReactComponent as SendIcon } from "../../../assets/icons/send.svg"
 
-const MessageForm: React.FC = () => {
-  const { currentUser } = useContext(AuthContext)
-  const { userData } = useContext(UserDataContext)
+const MessageForm = () => {
+  const { sendNewMsg } = useContext(UserDataContext)
+  const [msgInput, setMsgInput] = useState<string>("")
   const { targetUser }: { targetUser: string } = useParams()
 
-  const writeNewMessage = (e: React.FormEvent) => {
+  const writeNewMessage = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const [messageInput]: HTMLFormControlsCollection = (
-      e.target as HTMLFormElement
-    ).elements
+    const [messageInput] = e.target.elements
     let message = (messageInput as HTMLInputElement).value
 
     if (!message.trim()) {
       alert("Enter Your Message...")
     } else {
-      const newMessage = {
-        message,
-        time: new Date().getTime(),
-        from: currentUser?.displayName,
-      }
-
-      // Save the new message in the current user and target user database
-      if (userData.chats) {
-        firebase
-          .database()
-          .ref(`users/${currentUser?.displayName}/chats/${targetUser}`)
-          .set([
-            ...(userData.chats[targetUser] ? userData.chats[targetUser] : []),
-            newMessage,
-          ])
-          .then(() => {
-            if (userData.chats) {
-              firebase
-                .database()
-                .ref(`users/${targetUser}/chats/${currentUser?.displayName}`)
-                .set([
-                  ...(userData.chats[targetUser]
-                    ? userData.chats[targetUser]
-                    : []),
-                  newMessage,
-                ])
-                .catch((error) => {
-                  alert(error.message)
-                })
-            }
-          })
-          .then(() => {
-            // Empty the form to fill out a new form
-            const input = document.querySelector(
-              "#messageInput"
-            ) as HTMLInputElement
-            input.value = ""
-
-            // When a message is sent, it scrolls down to see the last message
-            const messages = document.querySelector(
-              "#messages"
-            ) as HTMLDivElement
-            messages.scrollTop = messages.scrollHeight
-          })
-          .catch((error) => {
-            alert(error.message)
-          })
+      try {
+        await sendNewMsg(targetUser, message)
+        // Scrolls down to see the last message
+        const messages = document.querySelector("#messages") as HTMLDivElement
+        messages.scrollTop = messages.scrollHeight
+      } catch (error: any) {
+        alert(error.message)
       }
     }
   }
@@ -77,10 +33,11 @@ const MessageForm: React.FC = () => {
         onSubmit={writeNewMessage}
         className="flex items-center w-full relative"
       >
-        <label htmlFor="messageInput"> </label>
+        <label htmlFor="messageInput"></label>
         <input
           className="h-full w-full p-4 focus:outline-none dark:bg-transparent dark:text-gray-200"
-          id="messageInput"
+          value={msgInput}
+          onChange={(e) => setMsgInput(e.target.value)}
           placeholder="Enter Your Message..."
         />
         <button type="submit" aria-label="send" className="absolute right-1">

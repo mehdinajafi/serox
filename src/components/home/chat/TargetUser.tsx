@@ -1,26 +1,34 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
-import { AuthContext } from "../../../contexts/AuthContext"
-import { firebase } from "../../../firebase/firebase"
+import { validate as uuidValidate } from "uuid"
+import { UserDataContext } from "../../../contexts/UserDataContext"
 import { ReactComponent as TrashIcon } from "../../../assets/icons/trash.svg"
 import { ReactComponent as XIcon } from "../../../assets/icons/x.svg"
-import { ShowChatContext } from "../../../contexts/ShowChatContext"
-import { validate as uuidValidate } from "uuid"
 
-const TargetUser: React.FC = () => {
-  const { currentUser } = useContext(AuthContext)
-  const { setShowChat } = useContext(ShowChatContext)
+interface ITargetUser {
+  showChat: boolean
+  changeShowChat: (showChat: boolean) => void
+}
+
+const TargetUser: React.FC<ITargetUser> = ({ showChat, changeShowChat }) => {
+  const { removeChat } = useContext(UserDataContext)
   const { targetUser }: { targetUser: string } = useParams()
 
-  const deleteChat = () => {
-    firebase
-      .database()
-      .ref(`users/${currentUser?.displayName}/chats/${targetUser}`)
-      .remove()
-      .catch((error) => {
-        alert(error.message)
-      })
-    setShowChat(false)
+  useEffect(() => {
+    if (targetUser) {
+      changeShowChat(true)
+    } else {
+      changeShowChat(false)
+    }
+  }, [changeShowChat, showChat, targetUser])
+
+  const deleteChat = async () => {
+    try {
+      await removeChat(targetUser)
+      changeShowChat(false)
+    } catch (error: any) {
+      alert(error.message)
+    }
   }
 
   return (
@@ -34,7 +42,7 @@ const TargetUser: React.FC = () => {
         <Link to="/" title="delete" onClick={deleteChat} className="mr-2">
           <TrashIcon className="w-6 text-red-600" />
         </Link>
-        <Link to="/" title="close" onClick={() => setShowChat(false)}>
+        <Link to="/" title="close" onClick={() => changeShowChat(false)}>
           <XIcon className="w-10 text-red-600" />
         </Link>
       </div>

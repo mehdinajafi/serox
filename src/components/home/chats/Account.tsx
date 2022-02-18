@@ -1,21 +1,22 @@
-import * as React from "react"
+import { useContext } from "react"
 import { AuthContext } from "../../../contexts/AuthContext"
-import { firebase } from "../../../firebase/firebase"
 import { ReactComponent as Signout } from "../../../assets/images/signout.svg"
 import { validate as uuidValidate } from "uuid"
 import { ThemeContext } from "../../../contexts/ThemeContext"
 import { ReactComponent as SunIcon } from "../../../assets/icons/sun.svg"
 import { ReactComponent as MoonIcon } from "../../../assets/icons/moon.svg"
 
-const Account: React.FC = () => {
-  const { currentUser } = React.useContext(AuthContext)
-  const { theme, changeTheme } = React.useContext(ThemeContext)
+const Account = () => {
+  const { signOut, currentUser } = useContext(AuthContext)
+  const { theme, changeTheme } = useContext(ThemeContext)
 
-  const signout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => window.location.assign("/"))
+  const signout = async () => {
+    try {
+      await signOut()
+      window.location.assign("/")
+    } catch (error: any) {
+      alert(error.message)
+    }
   }
 
   return (
@@ -29,6 +30,7 @@ const Account: React.FC = () => {
       ) : (
         <div className="h-10 w-48 rounded animate-pulse bg-gray-300"></div>
       )}
+
       <div className="flex space-x-4">
         <button
           className="p-2"
@@ -41,6 +43,7 @@ const Account: React.FC = () => {
             <MoonIcon className="w-5" />
           )}
         </button>
+
         <button
           onClick={signout}
           title="Signout"

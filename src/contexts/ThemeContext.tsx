@@ -1,16 +1,14 @@
-import { createContext, ReactNode, useEffect, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 
 export const ThemeContext = createContext({
   theme: "light",
   changeTheme: () => {},
 })
 
-interface ThemeProviderProps {
-  children: ReactNode
-}
+export type Theme = "light" | "dark"
 
-const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<"light" | "dark">("light")
+const ThemeProvider: React.FC = ({ children }) => {
+  const [theme, setTheme] = useState<Theme>("light")
 
   const changeTheme = () => {
     setTheme((prevTheme) => {
@@ -21,18 +19,17 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   }
 
   useEffect(() => {
-    const localStorageTheme = localStorage.getItem("theme") as
-      | ("light" | "dark")
-      | null
+    const localTheme = localStorage.getItem("theme") as Theme | null
+    const htmlTag = document.documentElement
 
-    if (localStorageTheme) {
-      setTheme(localStorageTheme)
+    if (localTheme) {
+      setTheme(localTheme)
     }
 
-    if (localStorageTheme === "dark") {
-      document.documentElement.classList.add("dark")
+    if (localTheme === "dark") {
+      htmlTag.classList.add("dark")
     } else {
-      document.documentElement.classList.remove("dark")
+      htmlTag.classList.remove("dark")
     }
   }, [theme])
 

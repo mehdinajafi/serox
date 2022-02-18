@@ -1,23 +1,22 @@
 import * as React from "react"
-import { firebase } from "../../firebase/firebase"
-import { ReactComponent as ErrorLogo } from "../../assets/icons/error.svg"
+import { AuthContext } from "../../contexts/AuthContext"
+import { AuthMethod } from "../../pages/Join"
 import Loading from "../ui/loading/Loading"
+import { ReactComponent as ErrorLogo } from "../../assets/icons/error.svg"
 
-interface SignupProps {
-  setAuthMethod: React.Dispatch<React.SetStateAction<"login" | "signup">>
+interface ISignup {
+  setAuthMethod: (method: AuthMethod) => void
 }
 
-const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
+const Signup: React.FC<ISignup> = ({ setAuthMethod }) => {
+  const { signup } = React.useContext(AuthContext)
   const [error, setError] = React.useState<null | string>(null)
   const [loading, setLoading] = React.useState<boolean>(false)
 
-  const submitForm = (e: React.FormEvent) => {
+  const submitForm = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const [
-      userNameInput,
-      emailInput,
-      passwordInput,
-    ]: HTMLFormControlsCollection = (e.target as HTMLFormElement).elements
+
+    const [userNameInput, emailInput, passwordInput] = e.target.elements
     const username = (userNameInput as HTMLInputElement).value.trim()
     const email = (emailInput as HTMLInputElement).value.trim()
     const password = (passwordInput as HTMLInputElement).value.trim()
@@ -26,58 +25,25 @@ const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
       setError("You need to enter your username, email and password.")
     } else {
       setLoading(true)
-      firebase
-        .firestore()
-        .collection("users")
-        .doc(username)
-        .get()
-        .then((val) => {
-          // If the username was not taken
-          if (val.data() === undefined) {
-            firebase
-              .auth()
-              .createUserWithEmailAndPassword(email, password)
-              // Save username in displayName
-              .then((userCredential) => {
-                if (userCredential.user) {
-                  userCredential.user.updateProfile({ displayName: username })
-                }
-              })
-              // Save username in firestore
-              .then(() =>
-                firebase
-                  .firestore()
-                  .collection("users")
-                  .doc(username)
-                  .set({})
-                  .catch((err) => {
-                    setError(err.message)
-                    setLoading(false)
-                  })
-              )
-              .catch((error) => {
-                setError(error.message)
-                setLoading(false)
-              })
-            // If the username was taken
-          } else {
-            setError("This username is already taken.")
-            setLoading(false)
-          }
-        })
-        .catch((error) => {
-          setError(error.message)
-          setLoading(false)
-        })
-    }
-  }
 
-  if (loading) {
-    return <Loading />
+      try {
+        await signup(username, email, password)
+        setLoading(false)
+      } catch (error: any) {
+        if (error && error.message) {
+          setError(error.message)
+        } else {
+          setError("Something went wrong! Please try again.")
+        }
+        setLoading(false)
+      }
+    }
   }
 
   return (
     <div className="my-4">
+      {loading && <Loading />}
+
       <form onSubmit={submitForm} className="flex flex-col">
         <input
           type="text"
@@ -87,11 +53,13 @@ const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
         <input
           type="email"
           placeholder="Email"
+          autoComplete="email"
           className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline dark:bg-transparent dark:text-gray-300"
         />
         <input
           type="password"
           placeholder="Password"
+          autoComplete="current-password"
           className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline dark:bg-transparent dark:text-gray-300"
         />
         {error && (
@@ -107,11 +75,12 @@ const Signup: React.FC<SignupProps> = ({ setAuthMethod }) => {
           Create account
         </button>
       </form>
+
       <div className="my-4 font-bold text-center text-gray-900 dark:text-gray-400">
         Already a seroxer?{" "}
         <button
           className="font-bold text-blue-700 hover:underline focus:outline-none"
-          onClick={() => setAuthMethod("login")}
+          onClick={() => setAuthMethod(AuthMethod.Login)}
         >
           Log in
         </button>
