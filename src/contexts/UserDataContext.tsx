@@ -51,11 +51,11 @@ const UserDataProvider: React.FC = ({ children }) => {
         .off("value", listner)
   }, [currentUser?.displayName])
 
-  const sendNewMsg = async (targetUser: string, msg: string) => {
+  const sendNewMsg = async (targetUser: string, msgTxt: string) => {
     const msgObj = {
       time: new Date().getTime(),
       from: currentUser?.displayName,
-      msg,
+      message: msgTxt,
     }
 
     return await firebase

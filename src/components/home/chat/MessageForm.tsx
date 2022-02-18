@@ -18,6 +18,7 @@ const MessageForm = () => {
     } else {
       try {
         await sendNewMsg(targetUser, message)
+        setMsgInput("")
         // Scrolls down to see the last message
         const messages = document.querySelector("#messages") as HTMLDivElement
         messages.scrollTop = messages.scrollHeight
