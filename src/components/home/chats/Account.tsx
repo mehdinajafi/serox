@@ -24,16 +24,16 @@ const Account = () => {
       {currentUser?.displayName ? (
         <div className="my-1 text-2xl font-bold text-gray-900 dark:text-gray-200">
           {uuidValidate(currentUser.displayName)
-            ? `U-${currentUser.displayName.slice(24, 36)}`
+            ? "Anonymous"
             : currentUser?.displayName}
         </div>
       ) : (
-        <div className="h-10 w-48 rounded animate-pulse bg-gray-300"></div>
+        <div className="h-10 w-48 rounded animate-pulse cursor-progress bg-gray-300" />
       )}
 
       <div className="flex space-x-4">
         <button
-          className="p-2"
+          className="flex items-center justify-center w-10 h-10 p-2 hover:bg-slate-200 dark:hover:bg-neutral-900 rounded-full"
           onClick={() => changeTheme()}
           title={theme === "dark" ? "disable dark mode" : "enabel dark mode"}
         >

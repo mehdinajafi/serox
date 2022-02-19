@@ -2,15 +2,7 @@ const defaultTheme = require("tailwindcss/defaultTheme")
 
 module.exports = {
   darkMode: "class",
-  purge: {
-    enabled: false,
-    content: [
-      "./src/components/**/**/*.tsx",
-      "./src/components/**/*.tsx",
-      "./src/pages/*.tsx",
-      "./src/*.tsx",
-    ],
-  },
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     maxHeight: {
       content: "max-content",
@@ -23,12 +15,6 @@ module.exports = {
     minWidth: {
       96: "24em",
       full: "100%",
-    },
-    flexGrow: {
-      0: 0,
-      1: 1,
-      2: 2,
-      DEFAULT: 1,
     },
     extend: {
       spacing: {
@@ -57,17 +43,7 @@ module.exports = {
           700: "#2a66ff",
           800: "#1652f0",
         },
-        yellow: "#fec14a",
-        darkBlue: {
-          900: "#113355",
-        },
         "dark-grey": "#121212",
-      },
-      zIndex: {
-        "-1": "-1",
-      },
-      transitionProperty: {
-        position: "top, right, bottom, left",
       },
     },
     container: {

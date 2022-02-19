@@ -1,8 +1,9 @@
 import * as React from "react"
-import Loading from "../ui/loading/Loading"
+import Loading from "../ui/Loading"
 import { AuthMethod } from "../../pages/Join"
 import { AuthContext } from "../../contexts/AuthContext"
 import { ReactComponent as ErrorLogo } from "../../assets/icons/error.svg"
+import Input from "../ui/Input"
 
 interface ILogin {
   setAuthMethod: (method: AuthMethod) => void
@@ -43,17 +44,11 @@ const Login: React.FC<ILogin> = ({ setAuthMethod }) => {
       {loading && <Loading />}
 
       <form onSubmit={submitForm} className="flex flex-col">
-        <input
-          type="email"
-          placeholder="Email"
-          autoComplete="email"
-          className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline dark:bg-transparent dark:text-gray-300"
-        />
-        <input
+        <Input type="email" placeholder="Email" autoComplete="email" />
+        <Input
           type="password"
           placeholder="Password"
           autoComplete="current-password"
-          className="p-4 mb-2 rounded border border-gray-300 focus:outline-none focus:shadow-outline dark:bg-transparent dark:text-gray-300"
         />
         {error && (
           <div className="flex items-center mb-2 p-2 rounded border border-red-700">

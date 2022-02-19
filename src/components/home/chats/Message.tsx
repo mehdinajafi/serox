@@ -4,6 +4,7 @@ import { AuthContext } from "../../../contexts/AuthContext"
 import { IMessage, UserDataContext } from "../../../contexts/UserDataContext"
 import { Link } from "react-router-dom"
 import { validate as uuidValidate } from "uuid"
+import chatTitle from "../../../helper/functions/chatTitle"
 
 interface IMessageComponent {
   user: string
@@ -26,22 +27,28 @@ const Message: React.FC<IMessageComponent> = ({ user, changeShowChat }) => {
     }
   }, [user, userData.chats])
 
+  const lastMsgFrom = (lastMessage: IMessage) => {
+    if (lastMessage.from === currentUser?.displayName) {
+      return "You: "
+    } else if (uuidValidate(user)) {
+      return "Anonymous user: "
+    } else {
+      return lastMessage.from
+    }
+  }
+
   return (
     <React.Fragment>
       <Link
         to={user}
         onClick={() => changeShowChat(true)}
-        className="flex flex-col p-2 hover:bg-gray-100 dark:hover:bg-transparent"
+        className="flex flex-col p-2 mx-2 rounded-2xl hover:bg-gray-100 dark:hover:bg-transparent"
       >
         {lastMessage && (
           <React.Fragment>
             <div className="flex justify-between items-center">
               <div className="font-bold text-gray-900 dark:text-gray-200">
-                {uuidValidate(user)
-                  ? `U-${user.slice(24, 36)}`
-                  : user === currentUser?.displayName
-                  ? "Saved Messages"
-                  : user}
+                {chatTitle(user, currentUser?.displayName)}
               </div>
               <div className="text-sm text-gray-500">
                 {new Date(lastMessage.time).getDay() === new Date().getDay()
@@ -51,19 +58,11 @@ const Message: React.FC<IMessageComponent> = ({ user, changeShowChat }) => {
             </div>
 
             <div className="flex items-center text-gray-500">
-              <div className="flex items-center">
-                <div className="mr-1">
-                  {uuidValidate(user)
-                    ? `U-${user.slice(24, 36)}: `
-                    : lastMessage.from === currentUser?.displayName
-                    ? "you: "
-                    : lastMessage.from}
-                </div>
-                <div>
-                  {lastMessage.message.length >= 20
-                    ? `${lastMessage.message.slice(0, 20)}...`
-                    : lastMessage.message.slice(0, 20)}
-                </div>
+              <div className="mr-1">{lastMsgFrom(lastMessage)}</div>
+              <div>
+                {lastMessage.message.length >= 20
+                  ? `${lastMessage.message.slice(0, 20)}...`
+                  : lastMessage.message.slice(0, 20)}
               </div>
             </div>
           </React.Fragment>

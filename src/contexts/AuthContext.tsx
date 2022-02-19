@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { firebase } from "../firebase/firebase"
-import Loading from "../components/ui/loading/Loading"
+import Loading from "../components/ui/Loading"
 
 interface IAuthContext {
   currentUser: firebase.User | null

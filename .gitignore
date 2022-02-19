@@ -12,9 +12,6 @@
 /build
 .netlify
 
-# tailwindcss
-/src/styles/main.css
-
 # misc
 .DS_Store
 .env

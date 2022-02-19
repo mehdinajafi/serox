@@ -29,19 +29,22 @@ const MessageForm = () => {
   }
 
   return (
-    <div className="w-full flex items-center justify-center border-t border-gray-200">
-      <form
-        onSubmit={writeNewMessage}
-        className="flex items-center w-full relative"
-      >
+    <div className="border-t border-gray-200">
+      <form onSubmit={writeNewMessage} className="flex items-center relative">
         <label htmlFor="messageInput"></label>
         <input
-          className="h-full w-full p-4 focus:outline-none dark:bg-transparent dark:text-gray-200"
+          placeholder="Enter Your Message..."
+          disabled={targetUser === undefined}
           value={msgInput}
           onChange={(e) => setMsgInput(e.target.value)}
-          placeholder="Enter Your Message..."
+          className="h-full w-full p-4 pr-10 disabled:cursor-not-allowed focus:outline-none dark:bg-transparent dark:text-gray-200"
         />
-        <button type="submit" aria-label="send" className="absolute right-1">
+        <button
+          type="submit"
+          aria-label="send"
+          disabled={targetUser === undefined}
+          className="absolute right-1 disabled:cursor-not-allowed"
+        >
           <SendIcon className="w-8 h-8 stroke-current text-blue-700" />
         </button>
       </form>

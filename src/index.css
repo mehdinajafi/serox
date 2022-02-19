@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: "Rubik";
   font-style: normal;
@@ -25,21 +29,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-#messages {
-  scroll-behavior: smooth;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-  width: 0 !important;
+iframe {
+  pointer-events: none;
 }
 
 .hide-scrollbar {
   overflow: -moz-scrollbars-none;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0 !important;
 }

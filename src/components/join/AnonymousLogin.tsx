@@ -1,6 +1,6 @@
 import * as React from "react"
 import { AuthContext } from "../../contexts/AuthContext"
-import Loading from "../ui/loading/Loading"
+import Loading from "../ui/Loading"
 
 const AnonymousLogin = () => {
   const { loginAnonymously } = React.useContext(AuthContext)
@@ -16,15 +16,12 @@ const AnonymousLogin = () => {
     }
   }
 
-  if (loading) {
-    return <Loading />
-  }
-
   return (
     <div className="dark:bg-dark-800 dark:text-gray-400">
+      {loading && <Loading />}
       <button
         onClick={signInAnonymously}
-        className="w-full py-2 mt-4 flex flex-col items-center border rounded hover:bg-gray-300 dark:border-gray-400 dark:hover:bg-black"
+        className="flex flex-col items-center w-full py-2 mt-4 border rounded hover:bg-gray-300 dark:border-gray-400 dark:hover:bg-black"
       >
         <div className="text-2xl font-bold">Enter Anonymously</div>
         <div className="text-sm">No Information Needed</div>

@@ -11,7 +11,7 @@ export interface IMessage {
 export interface IUserData {
   chats: {
     [targetUser: string]: IMessage[]
-  }
+  } | null
 }
 
 interface IUserDataContext {
@@ -28,7 +28,7 @@ export const UserDataContext = React.createContext<IUserDataContext>({
 
 const UserDataProvider: React.FC = ({ children }) => {
   const [userData, setUserData] = React.useState<IUserData>({
-    chats: {},
+    chats: null,
   })
   const { currentUser } = useContext(AuthContext)
 
@@ -62,7 +62,9 @@ const UserDataProvider: React.FC = ({ children }) => {
       .database()
       .ref(`users/${currentUser?.displayName}/chats/${targetUser}`)
       .set([
-        ...(userData.chats[targetUser] ? userData.chats[targetUser] : []),
+        ...(userData.chats && userData.chats[targetUser]
+          ? userData.chats[targetUser]
+          : []),
         msgObj,
       ])
       .then(() => {

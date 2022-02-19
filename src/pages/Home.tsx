@@ -4,7 +4,7 @@ import MessageForm from "../components/home/chat/MessageForm"
 import Messages from "../components/home/chat/Messages"
 import TargetUser from "../components/home/chat/TargetUser"
 import Account from "../components/home/chats/Account"
-import MessagesFrom from "../components/home/chats/MessagesFrom"
+import LastChats from "../components/home/chats/LastChats"
 import Search from "../components/home/chats/Search"
 import UserDataProvider from "../contexts/UserDataContext"
 
@@ -17,7 +17,7 @@ const Home = () => {
     <div
       className={`${
         showChat ? "flex flex-col" : "hidden"
-      } md:flex md:flex-col md:w-full-96 w-full h-full border-l border-gray-200 `}
+      } md:flex md:flex-col md:w-full-96 w-full h-full md:border-l border-gray-200 `}
     >
       <TargetUser showChat={showChat} changeShowChat={changeShowChat} />
       <Messages />
@@ -33,7 +33,7 @@ const Home = () => {
     >
       <Account />
       <Search changeShowChat={changeShowChat} />
-      <MessagesFrom changeShowChat={changeShowChat} />
+      <LastChats changeShowChat={changeShowChat} />
     </div>
   )
 
@@ -44,6 +44,7 @@ const Home = () => {
           <Chats />
 
           <Switch>
+            <Route exact path="/" component={Chat}></Route>
             <Route path="/:targetUser" component={Chat}></Route>
           </Switch>
         </Router>
