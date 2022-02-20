@@ -5,6 +5,7 @@ import { validate as uuidValidate } from "uuid"
 import { ThemeContext } from "../../../contexts/ThemeContext"
 import { ReactComponent as SunIcon } from "../../../assets/icons/sun.svg"
 import { ReactComponent as MoonIcon } from "../../../assets/icons/moon.svg"
+import showNotification from "../../../helper/functions/showNotification"
 
 const Account = () => {
   const { signOut, currentUser } = useContext(AuthContext)
@@ -15,7 +16,19 @@ const Account = () => {
       await signOut()
       window.location.assign("/")
     } catch (error: any) {
-      alert(error.message)
+      if (error && error.message) {
+        showNotification({
+          type: "danger",
+          title: "Error",
+          message: error.message,
+        })
+      } else {
+        showNotification({
+          type: "danger",
+          title: "Error",
+          message: "Something went wrong!",
+        })
+      }
     }
   }
 

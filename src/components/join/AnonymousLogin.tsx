@@ -1,5 +1,6 @@
 import * as React from "react"
 import { AuthContext } from "../../contexts/AuthContext"
+import showNotification from "../../helper/functions/showNotification"
 import Loading from "../ui/Loading"
 
 const AnonymousLogin = () => {
@@ -12,6 +13,11 @@ const AnonymousLogin = () => {
     try {
       await loginAnonymously()
     } catch (error) {
+      showNotification({
+        type: "danger",
+        title: "Error",
+        message: "Something went wrong! Please try again.",
+      })
       setLoading(false)
     }
   }

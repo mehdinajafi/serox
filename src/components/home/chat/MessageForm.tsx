@@ -2,6 +2,7 @@ import { useContext, useState } from "react"
 import { useParams } from "react-router-dom"
 import { UserDataContext } from "../../../contexts/UserDataContext"
 import { ReactComponent as SendIcon } from "../../../assets/icons/send.svg"
+import showNotification from "../../../helper/functions/showNotification"
 
 const MessageForm = () => {
   const { sendNewMsg } = useContext(UserDataContext)
@@ -13,18 +14,18 @@ const MessageForm = () => {
     const [messageInput] = e.target.elements
     let message = (messageInput as HTMLInputElement).value
 
-    if (!message.trim()) {
-      alert("Enter Your Message...")
-    } else {
-      try {
-        await sendNewMsg(targetUser, message)
-        setMsgInput("")
-        // Scrolls down to see the last message
-        const messages = document.querySelector("#messages") as HTMLDivElement
-        messages.scrollTop = messages.scrollHeight
-      } catch (error: any) {
-        alert(error.message)
-      }
+    try {
+      await sendNewMsg(targetUser, message)
+      setMsgInput("")
+      // Scrolls down to see the last message
+      const messages = document.querySelector("#messages") as HTMLDivElement
+      messages.scrollTop = messages.scrollHeight
+    } catch (error: any) {
+      showNotification({
+        type: "danger",
+        title: "Error",
+        message: "Something went wrong!",
+      })
     }
   }
 
@@ -42,7 +43,7 @@ const MessageForm = () => {
         <button
           type="submit"
           aria-label="send"
-          disabled={targetUser === undefined}
+          disabled={targetUser === undefined || msgInput.trim() === ""}
           className="absolute right-1 disabled:cursor-not-allowed"
         >
           <SendIcon className="w-8 h-8 stroke-current text-blue-700" />

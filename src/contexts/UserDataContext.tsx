@@ -76,9 +76,6 @@ const UserDataProvider: React.FC = ({ children }) => {
               ...(userData.chats[targetUser] ? userData.chats[targetUser] : []),
               msgObj,
             ])
-            .catch((error) => {
-              alert(error.message)
-            })
         }
       })
   }

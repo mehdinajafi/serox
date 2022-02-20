@@ -5,6 +5,7 @@ import { UserDataContext } from "../../../contexts/UserDataContext"
 import { ReactComponent as TrashIcon } from "../../../assets/icons/trash.svg"
 import { ReactComponent as XIcon } from "../../../assets/icons/x.svg"
 import chatTitle from "../../../helper/functions/chatTitle"
+import showNotification from "../../../helper/functions/showNotification"
 
 interface ITargetUser extends RouteComponentProps {
   showChat: boolean
@@ -34,7 +35,19 @@ const TargetUser: React.FC<ITargetUser> = ({
       changeShowChat(false)
       history.push("/")
     } catch (error: any) {
-      alert(error.message)
+      if (error && error.message) {
+        showNotification({
+          type: "danger",
+          title: "Error",
+          message: error.message,
+        })
+      } else {
+        showNotification({
+          type: "danger",
+          title: "Error",
+          message: "Something went wrong!",
+        })
+      }
     }
   }
 
