@@ -2,7 +2,7 @@
 
 A Chat Service.
 
-# Overview
+## Overview
 
 - **Library:** [React](https://reactjs.org/)
 - **Routing library:** [React Router](https://reactrouter.com/)
